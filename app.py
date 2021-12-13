@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import checks
+import checks_with_selenium, checks_with_bs4
 
 app = Flask(__name__)
   
@@ -12,9 +12,9 @@ def index():
         if bookISBN == "":
             bookISBN = checks.findISBN(bookName)
 
-        price_waterstones = checks.waterstones(bookISBN)
-        price_wob = checks.wob(bookISBN)
-        price_amazon = checks.amazon(bookISBN)
+        price_waterstones = checks_with_selenium.waterstones(bookISBN)
+        price_wob = checks_with_bs4.wob(bookISBN)
+        price_amazon = checks_with_selenium.amazon(bookISBN)
 
         return render_template('main.html', wob=price_wob, waterstones=price_waterstones, amazon=price_amazon)
     else: 
