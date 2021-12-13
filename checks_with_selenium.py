@@ -7,14 +7,14 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import time
 
-s=Service('/Users/bia/bookcompare/bookcompare/chromedriver')
+s=Service('/Users/bia/bookcompare/chromedriver')
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 
-driver = webdriver.Chrome(service=s, options=chrome_options)
-
 def findISBN(bookName):
+    driver = webdriver.Chrome(service=s, options=chrome_options)
+
     findURL = "https://www.isbnsearch.org"
     driver.get(findURL)
 
@@ -25,14 +25,17 @@ def findISBN(bookName):
     firstSearchResult = driver.find_element(By.XPATH, "//*[@id='searchresults']/li[1]/div[2]/h2/a") 
     foundISBN = firstSearchResult.get_attribute('href')
 
+    driver.quit()
     return foundISBN[28:]
 
 def amazon(bookISBN):
+    driver = webdriver.Chrome(service=s, options=chrome_options)
+
     amazonURL = "https://www.amazon.co.uk/s?k={}&ref=nb_sb_noss".format(bookISBN)
     driver.get(amazonURL)
 
     start_time = time.time()
-
+    
     try:
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, "sp-cc-accept"))).click()
 
@@ -47,6 +50,7 @@ def amazon(bookISBN):
         price = "unavailable"
 
     print(time.time() - start_time) 
+    driver.quit()
     return price
 
 # print(findISBN("Good Economics for Hard Times"))

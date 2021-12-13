@@ -9,17 +9,22 @@
     </head>
     <body>
         <header>
-            <h1>enter isbn and/or name</h1>
-            <form action="/" method="POST">
-                ISBN
-                <input type="text" maxlength="13" name="bookISBN">
-                name
-                <input type="text" maxlength="30" name="bookName" size=30>
-                <input type="submit" name="submitButton" value="go">
-            </form>
+            <h1>bookcompare</h1>
         </header>
         <main>
-            {% block body %}{% endblock %}
+            <div>
+              <h2>enter ISBN and/or name</h2><br><br>
+              <form action="/" method="POST">
+                  ISBN 
+                  <input type="text" maxlength="13" size=30 name="bookISBN"><br><br>
+                  name
+                  <input type="text" maxlength="30" name="bookName" size=50><br><br><br>
+                  <br><input type="submit" class="submit"name="submitButton" value="go">
+              </form>
+            </div>
+            <div>
+                {% block body %}{% endblock %}
+            </div>
         </main>
         <footer>
 

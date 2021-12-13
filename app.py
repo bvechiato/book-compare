@@ -10,9 +10,9 @@ def index():
         bookISBN = request.form['bookISBN']
 
         if bookISBN == "":
-            bookISBN = checks.findISBN(bookName)
+            bookISBN = checks_with_selenium.findISBN(bookName)
 
-        price_waterstones = checks_with_selenium.waterstones(bookISBN)
+        price_waterstones = checks_with_bs4.waterstones(bookISBN)
         price_wob = checks_with_bs4.wob(bookISBN)
         price_amazon = checks_with_selenium.amazon(bookISBN)
 
