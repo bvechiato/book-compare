@@ -4,9 +4,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import time
 
-s=Service('/Users/bia/bookcompare/chromedriver')
-driver = webdriver.Chrome(service=s)
+s=Service('/Users/bia/bookcompare/bookcompare/chromedriver')
+
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+
+driver = webdriver.Chrome(service=s, options=chrome_options)
 
 def findISBN(bookName):
     findURL = "https://www.isbnsearch.org"
@@ -25,14 +31,22 @@ def amazon(bookISBN):
     amazonURL = "https://www.amazon.co.uk/s?k={}&ref=nb_sb_noss".format(bookISBN)
     driver.get(amazonURL)
 
-    try:
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='search']/div[1]/div[1]/div/span[3]/div[2]/div[1]/div/span/div/div/div[2]/div[2]/div/div/div[1]/h2/a"))).click()
+    start_time = time.time()
 
-        elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='corePrice_feature_div']/div/span/span[2]")))
+    try:
+        WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, "sp-cc-accept"))).click()
+
+        try:
+            WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, "//*[@id='search']/div[1]/div[1]/div/span[3]/div[2]/div[1]/div/span/div/div/div[2]/div[2]/div/div/div[1]/h2/a"))).click()
+        except:
+            WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, "//*[@id='search']/div[1]/div[1]/div/span[3]/div[2]/div[2]/div/span/div/div/div[2]/div[2]/div/div/div[1]/h2/a"))).click()
+
+        elem = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.XPATH, "//*[@id='corePrice_feature_div']/div/span/span[2]")))
         price = elem.get_attribute("textContent")
     except:
         price = "unavailable"
 
+    print(time.time() - start_time) 
     return price
 
 # print(findISBN("Good Economics for Hard Times"))
