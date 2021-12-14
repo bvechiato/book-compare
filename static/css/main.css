@@ -1,53 +1,60 @@
 body {
-    font-family: Georgia, serif;
-    text-align: center;
-  }
-  
-  h1 {
-    text-align: center;
-    color: white;
-    padding-top: 20px;
-    letter-spacing: 5px;
-  }
-  
-  h2 {
-    color: #000032;
-  }
-  
-  header {
-    height: 90px;
-    background-color: #add8e6;
-  }
-  
-  div {
-    margin-right: auto;
-    margin-left: auto;
-    width: 500px;
-  }
-  
-  input {
-    border-style: none;
-    border-bottom-style: solid;
-    border-color: 89cff0;
-    font-size: 15px;
-    text-align: center;
-    letter-spacing: 1.5px;
-    height: 40px;
-  }
-  
-  textarea:focus, input:focus{
-      outline: none;
-  }
-  
-  input:hover {
-    border-color: #5cbdea;
-  } 
-  
-  .submit {
-    font-size: 20px;
-    border-bottom-style: none;
-  }
-  
-  .submit:hover {
-    color: #000032;
-  }
+  font-family: Georgia, serif;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  padding-top: 20px;
+  letter-spacing: 5px;
+}
+
+h2 {
+  color: #000032;
+}
+
+header {
+  height: 90px;
+  background-color: #000032;
+}
+
+body {
+  margin-right: auto;
+  margin-left: auto;
+  width: 500px;
+}
+
+input {
+  border-style: none;
+  border-bottom-style: solid;
+  border-color: #000032;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 1.5px;
+  height: 40px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+input:hover {
+  border-color: #5cbdea;
+} 
+
+input[type=submit] {
+  background-color: white;
+  color: #000032;
+  font-size: 15px;
+  letter-spacing: 1px;
+  border-bottom-style: none;
+}
+
+input[type=submit]:hover {
+  color: #5cbdea;
+}
+
+::placeholder {
+  color: #7a8c9b;
+}

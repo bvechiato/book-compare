@@ -45,7 +45,7 @@ def amazon(bookISBN):
             WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, "//*[@id='search']/div[1]/div[1]/div/span[3]/div[2]/div[2]/div/span/div/div/div[2]/div[2]/div/div/div[1]/h2/a"))).click()
 
         elem = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.XPATH, "//*[@id='corePrice_feature_div']/div/span/span[2]")))
-        price = elem.get_attribute("textContent")
+        price = [elem.get_attribute("textContent"), amazonURL]
     except:
         price = "unavailable"
 

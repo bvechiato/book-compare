@@ -13,14 +13,12 @@
         </header>
         <main>
             <div>
-              <h2>enter ISBN and/or name</h2><br><br>
-              <form action="/" method="POST">
-                  ISBN 
-                  <input type="text" maxlength="13" size=30 name="bookISBN"><br><br>
-                  name
-                  <input type="text" maxlength="30" name="bookName" size=50><br><br><br>
-                  <br><input type="submit" class="submit"name="submitButton" value="go">
-              </form>
+                <h2>enter ISBN and/or name</h2><br><br>
+                <form action="/" method="POST"> 
+                    <input type="text" maxlength="13" size=40 name="bookISBN" placeholder="ISBN"><br><br>
+                    <input type="text" maxlength="30" name="bookName" size=40 placeholder="name"><br><br><br>
+                    <br><input type="submit" class="submit" name="submitButton" value="search">
+                </form>
             </div>
             <div>
                 {% block body %}{% endblock %}

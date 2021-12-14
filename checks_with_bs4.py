@@ -16,7 +16,7 @@ def waterstones(bookISBN):
         elem = soup.find(class_="price")
     finally:
         try: 
-            price = elem.text
+            price = [elem.text, waterstonesURL]
         except:
             price = "unavailable"
 
@@ -30,7 +30,7 @@ def wob(bookISBN):
 
     try:
         elem = soup.find(class_="price")
-        price = elem.text
+        price = [elem.text, wobURL]
     except:
         price = "unavailable"
 

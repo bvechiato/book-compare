@@ -3,10 +3,10 @@
 {% block body %}
 
 <br>
-the book costs {{ waterstones }} from waterstones
+{{ waterstones[0] }} from <a href="{{ waterstones[1] }}">waterstones</a>
 <br>
-the book costs {{ amazon }} from amazon
+{{ amazon[0] }} from <a href="{{ amazon[1] }}">amazon</a>
 <br>
-the book costs {{ wob }} from wob
+{{ wob[0] }} from <a href="{{ wob[1] }}">wob</a>
 
 {% endblock %}
