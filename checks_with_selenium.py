@@ -12,46 +12,26 @@ s=Service('/Users/bia/bookcompare/chromedriver')
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 
-def findISBN(bookName):
+def amazon(amazonURL):
     driver = webdriver.Chrome(service=s, options=chrome_options)
-
-    findURL = "https://www.isbnsearch.org"
-    driver.get(findURL)
-
-    searchBar = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.ID, "searchQuery")))
-    searchBar.send_keys(bookName)
-    searchBar.send_keys(Keys.RETURN)
-    
-    firstSearchResult = driver.find_element(By.XPATH, "//*[@id='searchresults']/li[1]/div[2]/h2/a") 
-    foundISBN = firstSearchResult.get_attribute('href')
-
-    driver.quit()
-    return foundISBN[28:]
-
-def amazon(bookISBN):
-    driver = webdriver.Chrome(service=s, options=chrome_options)
-
-    amazonURL = "https://www.amazon.co.uk/s?k={}&ref=nb_sb_noss".format(bookISBN)
-    driver.get(amazonURL)
+    # driver = webdriver.Chrome(service=s)
+    try:
+        driver.get(amazonURL)
+    except:
+        return "amazon feature broken"
+    driver.fullscreen_window()
 
     start_time = time.time()
-    
+
     try:
-        WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, "sp-cc-accept"))).click()
+        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.ID, "sp-cc-accept"))).click()
 
-        try:
-            WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, "//*[@id='search']/div[1]/div[1]/div/span[3]/div[2]/div[1]/div/span/div/div/div[2]/div[2]/div/div/div[1]/h2/a"))).click()
-        except:
-            WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, "//*[@id='search']/div[1]/div[1]/div/span[3]/div[2]/div[2]/div/span/div/div/div[2]/div[2]/div/div/div[1]/h2/a"))).click()
-
-        elem = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.XPATH, "//*[@id='corePrice_feature_div']/div/span/span[2]")))
+        elem = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.ID, "price")))
         price = [elem.get_attribute("textContent"), amazonURL]
     except:
         price = "unavailable"
 
     print(time.time() - start_time) 
-    driver.quit()
     return price
 
-# print(findISBN("Good Economics for Hard Times"))
-# print(amazon("9780141986197"))
+# print(amazon("https://www.amazon.co.uk/gp/product/1501139231/ref=x_gr_w_bb_sout?ie=UTF8&tag=x_gr_w_bb_sout_uk-21&linkCode=as2&camp=1634&creative=6738"))
