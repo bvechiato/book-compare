@@ -12,14 +12,19 @@ def waterstones(bookISBN):
     dom = etree.HTML(str(soup))
     
     try:
-        elem = dom.xpath("/html/body/div[1]/div[3]/div[2]/section[1]/div[2]/div[2]/div/div/div/div[1]/div/b[2]")[0]
+        print("try")
+        elem = dom.xpath("//*[@itemprop='price']")[0]
+        print(elem)
     except:
-        elem = soup.find(class_="price")
+        print("except")
+        elem = soup.select_one("body > div.main-container > div.main-page.row > div:nth-child(2) > section.book-detail.span12.alpha.omega > div.span7.mobile-span12.alpha.tablet-alpha > div.book-actions > div > div > div > div.price > div > b")
+        print(elem)
     finally:
         try: 
             price = [elem.text, waterstonesURL]
         except:
-            price = "unavailable"
+            price = "unavailable on waterstones"
+        print(price)
 
     return price
 
@@ -34,7 +39,7 @@ def wob(bookISBN):
         elem = soup.find(class_="price")
         price = [elem.text, wobURL]
     except:
-        price = "unavailable"
+        price = "unavailable on wob"
 
     return price
 
@@ -52,7 +57,7 @@ def goodreads_with_ISBN(bookISBN):
         print("amazonURL: " + amazonURL.get('href'))
         return amazonURL
     except:
-        return "unavailable"
+        return "unavailable on amazon"
 
 def goodreads_with_bookName(bookName):
     newBookName = ""

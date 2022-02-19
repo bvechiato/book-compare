@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import time
 
-s=Service('/Users/bia/bookcompare/chromedriver')
+s=Service('/Users/bea/Documents/python/projects/bookcompare/chromedriver')
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
