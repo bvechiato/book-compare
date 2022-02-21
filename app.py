@@ -15,12 +15,9 @@ def index():
         price_waterstones = checks_with_bs4.waterstones(bookISBN)
         price_wob = checks_with_bs4.wob(bookISBN)
 
-        print(bookISBN)
-        amazonURL = checks_with_bs4.goodreads_with_ISBN(bookISBN)
-        print(amazonURL)
-        price_amazon = checks_with_selenium.amazon(amazonURL)
+        price_blackwells = checks_with_bs4.blackwells(bookISBN)
 
-        return render_template('main.html', wob=price_wob, waterstones=price_waterstones, amazon=price_amazon)
+        return render_template('main.html', wob=price_wob, waterstones=price_waterstones, blackwells=price_blackwells)
     else: 
         return render_template('base.html')
     

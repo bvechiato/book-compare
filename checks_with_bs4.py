@@ -26,6 +26,29 @@ def waterstones(bookISBN):
 
     return price
 
+def blackwells(bookISBN):
+    scraper = cloudscraper.create_scraper()
+    blackwellsURL = "https://blackwells.co.uk/bookshop/product/" + bookISBN 
+    print("waterstonesURL: " + blackwellsURL)
+
+    data = scraper.get(blackwellsURL).content
+    soup = BeautifulSoup(data, 'lxml')
+
+    dom = etree.HTML(str(soup))
+    
+    try:
+        elem = dom.xpath("//*[@id='main-content']/div[2]/div[1]/div[2]/div/div[1]/div/ul/li[2]")[0]
+    except:
+        elem = soup.select_one("#main-content > div.product_page > div.container.container--50.u-relative > div:nth-child(2) > div > div.product__price > div > ul > li.product-price--current")
+    finally:
+        try: 
+            price = [elem.text, blackwellsURL]
+        except:
+            price = "unavailable on blackwells"
+        print(price)
+
+    return price
+
 def wob(bookISBN):
     wobURL = "https://www.wob.com/en-gb/category/all?search=" + bookISBN
     print("wobURL: " + wobURL)
@@ -55,7 +78,7 @@ def goodreads_with_ISBN(bookISBN):
         print("amazonURL: " + amazonURL.get('href'))
         return amazonURL
     except:
-        return "unavailable on amazon"
+        return "unavailable"
 
 def goodreads_with_bookName(bookName):
     newBookName = ""
@@ -87,5 +110,3 @@ def goodreads_with_bookName(bookName):
         return ISBN.text
     except:
         return "unavailable"
-
-

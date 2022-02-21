@@ -10,7 +10,7 @@ import time
 s=Service('/Users/bea/Documents/python/projects/bookcompare/chromedriver')
 
 chrome_options = Options()
-chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--headless")
 
 def amazon(amazonURL):
     driver = webdriver.Chrome(service=s, options=chrome_options)
