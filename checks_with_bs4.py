@@ -1,24 +1,22 @@
 from bs4 import BeautifulSoup
 from lxml import etree
 import requests
+import cloudscraper
 
 def waterstones(bookISBN):
+    scraper = cloudscraper.create_scraper()
     waterstonesURL = "https://www.waterstones.com/books/search/term/" + bookISBN 
     print("waterstonesURL: " + waterstonesURL)
 
-    data = requests.get(waterstonesURL).text
+    data = scraper.get(waterstonesURL).content
     soup = BeautifulSoup(data, 'lxml')
 
     dom = etree.HTML(str(soup))
     
     try:
-        print("try")
         elem = dom.xpath("//*[@itemprop='price']")[0]
-        print(elem)
     except:
-        print("except")
         elem = soup.select_one("body > div.main-container > div.main-page.row > div:nth-child(2) > section.book-detail.span12.alpha.omega > div.span7.mobile-span12.alpha.tablet-alpha > div.book-actions > div > div > div > div.price > div > b")
-        print(elem)
     finally:
         try: 
             price = [elem.text, waterstonesURL]
@@ -89,3 +87,5 @@ def goodreads_with_bookName(bookName):
         return ISBN.text
     except:
         return "unavailable"
+
+
