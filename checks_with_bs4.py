@@ -1,7 +1,9 @@
 from bs4 import BeautifulSoup
 from lxml import etree
 import requests
+import re
 import cloudscraper
+
 
 def waterstones(bookISBN):
     scraper = cloudscraper.create_scraper()
@@ -12,6 +14,8 @@ def waterstones(bookISBN):
     soup = BeautifulSoup(data, 'lxml')
 
     dom = etree.HTML(str(soup))
+
+    print(dom)
     
     try:
         elem = dom.xpath("//*[@itemprop='price']")[0]
@@ -73,12 +77,11 @@ def goodreads_with_ISBN(bookISBN):
     dom = etree.HTML(str(soup))
 
     try:
-        amazonURL = dom.xpath("//*[@id='__next']/div/main/div[1]/div[1]/div/div[2]/div[2]/div/div[1]/button")[0]
+        bookTitle = dom.xpath("//*[@id='bookTitle']")[0]
 
-        print("amazonURL: " + amazonURL.get('href'))
-        return amazonURL
+        return [bookTitle, goodreadsURL]
     except:
-        return "unavailable"
+        return "book doesn't exist"
 
 def goodreads_with_bookName(bookName):
     newBookName = ""
