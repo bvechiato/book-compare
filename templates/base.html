@@ -5,14 +5,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>BookCompare</title>
+        <title>book-compare</title>
     </head>
     <body class="bg-gray font-sans-apple-system">
         <header>
             <h1 class="text-3xl font-medium text-gray-900 dark:text-white text-center mb-8 mt-8">book-compare</h1>
         </header>
-        <main>
-            <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 m-auto">
+        <main class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 m-auto">
+            <div>
                 <h2 class="text-xl font-medium text-gray-900 dark:text-white">Enter ISBN or book title</h2><br>
                 <form class="space-y-6" action="/" method="POST"> 
                     <div>
@@ -26,7 +26,7 @@
                   </div>
                 </form>
             </div>
-            <div>
+            <div class="mt-10">
                 {% block body %}{% endblock %}
             </div>
         </main>
