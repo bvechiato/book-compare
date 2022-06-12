@@ -19,7 +19,7 @@ def index():
         price_wob = checks_with_bs4.wob(bookISBN)
         price_blackwells = checks_with_bs4.blackwells(bookISBN)
 
-        return render_template('main.html', book=book_info, wob=price_wob, waterstones=price_waterstones, blackwells=price_blackwells)
+        return render_template('main.html', isbn=bookISBN, book=book_info, wob=price_wob, waterstones=price_waterstones, blackwells=price_blackwells)
     else: 
         return render_template('base.html')
     
