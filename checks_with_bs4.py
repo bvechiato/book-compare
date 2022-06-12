@@ -57,7 +57,7 @@ def wob(bookISBN):
     wobURL = "https://www.wob.com/en-gb/category/all?search=" + bookISBN
     print("wobURL: " + wobURL)
 
-    data = requests.get(wobURL).text
+    data = requests.get(wobURL).content
     soup = BeautifulSoup(data, 'lxml')
 
     try:
@@ -71,20 +71,19 @@ def wob(bookISBN):
 def goodreads_with_ISBN(bookISBN):
     goodreadsURL = "https://www.goodreads.com/search?q=" + bookISBN
 
-    data = requests.get(goodreadsURL).text
+    data = requests.get(goodreadsURL).content.decode('utf-8')
     soup = BeautifulSoup(data, 'lxml')
 
     dom = etree.HTML(str(soup))
 
     try:
-        try:
-            bookTitle = dom.xpath("//*[@id='bookTitle']")[0].text
-        except:
-            bookTitle = dom.xpath("//h1[@id='bookTitle']")[0].text 
+        print("tried")
+        bookTitle = dom.xpath("//*[@id='bookTitle']")[0].text
+        print("worked")
 
         return [bookTitle, goodreadsURL]
     except:
-        return "book doesn't exist"
+        return ["book doesn't exist", ""]
 
 def goodreads_with_bookName(bookName):
     newBookName = ""
