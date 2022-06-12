@@ -77,7 +77,10 @@ def goodreads_with_ISBN(bookISBN):
     dom = etree.HTML(str(soup))
 
     try:
-        bookTitle = dom.xpath("//*[@id='bookTitle']")[0]
+        try:
+            bookTitle = dom.xpath("//*[@id='bookTitle']")[0].text
+        except:
+            bookTitle = dom.xpath("//h1[@id='bookTitle']")[0].text 
 
         return [bookTitle, goodreadsURL]
     except:
