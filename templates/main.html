@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 
 {% block body %}
-
-<h3>looking for <a href="{{ book[1] }}">{{ book[0] }}</a></h3>
-
-<br>
-{{ waterstones[0] }} from <a href="{{ waterstones[1] }}">waterstones</a>
-<br>
-{{ blackwells[0] }} from <a href="{{ blackwells[1] }}">blackwells</a>
-<br>
-{{ wob[0] }} from <a href="{{ wob[1] }}">wob</a>
-
+<h3 class="text-m text-gray-900 block mb-3 dark:text-gray-300"><a href="{{ book[1] }}" class="font-medium">{{ book[0] }}</a> <span class="font-light">({{ isbn }})</span></h3>
+                  
+<table class="table-auto w-full">
+    <colgroup>
+        <col>
+        <col class="w-1/6">
+    </colgroup>
+    <tr>
+        <td><a href="{{ waterstones[1] }}" class="hover:font-medium">Waterstones</a></td>
+        <td>{{ waterstones[0] }}</td>
+    </tr>
+    <tr>
+        <td><a href="{{ blackwells[1] }}" class="hover:font-medium">Blackwells</a></td>
+        <td>{{ blackwells[0] }}</td>
+    </tr>
+    <tr>
+        <td><a href="{{ wob[1] }}" class="hover:font-medium">Wob</a></td>
+        <td>{{ wob[0] }}</td>
+    </tr>
+</table>
 {% endblock %}
  
