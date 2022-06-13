@@ -29,4 +29,5 @@ def index():
             
         return render_template('main.html', book=display_book)
     else: 
-        return render_template('base.html')
+        recently_searched = cache_manager.get_all()
+        return render_template('base.html', recently_searched=recently_searched)
