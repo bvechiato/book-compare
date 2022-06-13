@@ -24,7 +24,7 @@ def waterstones(bookISBN):
         try: 
             price = [elem.text, waterstonesURL]
         except:
-            price = "unavailable on waterstones"
+            price = ["unavailable on waterstones", waterstonesURL]
         print(price)
 
     return price
@@ -47,7 +47,7 @@ def blackwells(bookISBN):
         try: 
             price = [elem.text, blackwellsURL]
         except:
-            price = "unavailable on blackwells"
+            price = ["unavailable on blackwells", blackwellsURL]
         print(price)
 
     return price
@@ -63,7 +63,7 @@ def wob(bookISBN):
         elem = soup.find(class_="price")
         price = [elem.text, wobURL]
     except:
-        price = "unavailable on wob"
+        price = ["unavailable on wob", wobURL]
 
     return price
 
@@ -76,13 +76,11 @@ def goodreads_with_ISBN(bookISBN):
     dom = etree.HTML(str(soup))
 
     try:
-        print("tried")
         bookTitle = dom.xpath("//*[@id='bookTitle']")[0].text
-        print("worked")
 
         return [bookTitle, goodreadsURL]
     except:
-        return ["book doesn't exist", ""]
+        return ["book doesn't exist", goodreadsURL]
 
 def goodreads_with_bookName(bookName):
     newBookName = ""
