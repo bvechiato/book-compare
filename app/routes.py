@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request
-import checks_with_selenium, checks_with_bs4
+from flask import render_template, request
+from checks import checks_with_bs4, checks_with_selenium
+from app import app
 
-app = Flask(__name__)
-  
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
@@ -22,6 +21,3 @@ def index():
         return render_template('main.html', isbn=bookISBN, book=book_info, wob=price_wob, waterstones=price_waterstones, blackwells=price_blackwells)
     else: 
         return render_template('base.html')
-    
-if __name__ == "__main__":
-    app.run(debug=True)
