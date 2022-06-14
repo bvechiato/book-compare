@@ -4,7 +4,7 @@ import requests
 import cloudscraper
 
 
-def waterstones(bookISBN):
+def waterstone(bookISBN: str):
     scraper = cloudscraper.create_scraper()
     waterstonesURL = "https://www.waterstones.com/books/search/term/" + bookISBN 
     print("waterstonesURL: " + waterstonesURL)
@@ -29,7 +29,7 @@ def waterstones(bookISBN):
 
     return price
 
-def blackwells(bookISBN):
+def blackwells(bookISBN: str):
     scraper = cloudscraper.create_scraper()
     blackwellsURL = "https://blackwells.co.uk/bookshop/product/" + bookISBN 
     print("waterstonesURL: " + blackwellsURL)
@@ -52,7 +52,7 @@ def blackwells(bookISBN):
 
     return price
 
-def wob(bookISBN):
+def wob(bookISBN: str):
     wobURL = "https://www.wob.com/en-gb/category/all?search=" + bookISBN
     print("wobURL: " + wobURL)
 
@@ -67,7 +67,7 @@ def wob(bookISBN):
 
     return price
 
-def goodreads_with_ISBN(bookISBN):
+def goodreads(bookISBN: str):
     goodreadsURL = "https://www.goodreads.com/search?q=" + bookISBN
 
     data = requests.get(goodreadsURL).content.decode('utf-8')
@@ -81,34 +81,3 @@ def goodreads_with_ISBN(bookISBN):
         return [bookTitle, goodreadsURL]
     except:
         return ["book doesn't exist", goodreadsURL]
-
-def goodreads_with_bookName(bookName):
-    newBookName = ""
-    for x in bookName:
-        if x == ' ':
-            x = '+'
-
-        newBookName += x
-    
-    goodreadsURL = "https://www.goodreads.com/search?q=" + newBookName
-    print("goodreadsURL: " + goodreadsURL)
-
-    data = requests.get(goodreadsURL).text
-    soup = BeautifulSoup(data, 'lxml')
-
-    try:
-        elem = soup.find(class_="bookTitle").get('href')
-
-        bookURL = "https://www.goodreads.com/" + elem
-        
-        data2 = requests.get(bookURL).text
-        soup2 = BeautifulSoup(data2, 'lxml')
-
-        dom = etree.HTML(str(soup2))
-        
-        ISBN = dom.xpath("//*[@id='bookDataBox']/div[2]/div[2]/span/span")[0]
-        print("ISBN: " + ISBN.text)
-
-        return ISBN.text
-    except:
-        return "unavailable"

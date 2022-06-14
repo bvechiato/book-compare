@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect
-from checks import checks_with_bs4, checks_with_selenium
+from checks import checks_with_selenium, checks_with_isbn, checks_with_title
 from app import app, cache_manager
 from app import models
 
@@ -12,7 +12,7 @@ def index():
 
         # if isbn isn't entered
         if bookISBN == "":
-            bookISBN = checks_with_bs4.goodreads_with_bookName(request.form['bookName'])
+            bookISBN = checks_with_title.goodreads(request.form['bookName'])
         return redirect(f'/{bookISBN}')
     else: 
         return render_template('base.html', recently_searched=recently_searched)
@@ -21,7 +21,7 @@ def index():
 def search(bookISBN):
     recently_searched = cache_manager.get_all()
     bookISBN = str(bookISBN)
-    book_info = checks_with_bs4.goodreads_with_ISBN(bookISBN)
+    book_info = checks_with_isbn.goodreads(bookISBN)
         
     # check if book already exists in cache
     if cache_manager.check(bookISBN):
@@ -29,9 +29,9 @@ def search(bookISBN):
         return render_template('main.html', book=display_book, recently_searched=recently_searched)
 
     # get price
-    waterstones = checks_with_bs4.waterstones(bookISBN)
-    wob = checks_with_bs4.wob(bookISBN)
-    blackwells = checks_with_bs4.blackwells(bookISBN)
+    waterstones = checks_with_isbn.waterstones(bookISBN)
+    wob = checks_with_isbn.wob(bookISBN)
+    blackwells = checks_with_isbn.blackwells(bookISBN)
         
     new_book = models.Book(bookISBN, book_info[0], book_info[1], wob[0], waterstones[0], blackwells[0], wob[1], waterstones[1], blackwells[1])
     cache_manager.set(bookISBN, new_book)
