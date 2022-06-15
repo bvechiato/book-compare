@@ -7,7 +7,7 @@ def check(key: str) -> bool:
     """Takes a key and checks if it exists in cache
 
     Args:
-        key (str): isbn
+        key (str): isbn or title
 
     Returns:
         bool: exists in cache or not
@@ -22,7 +22,7 @@ def get(key: str) -> list[str]:
     """Takes the key and returns the book object in a string
 
     Args:
-        key (str): isbn
+        key (str): isbn or title
 
     Returns:
         list[str]: book object in a string
