@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, flash
 from checks import checks, find
 from app import app, cache_manager
 from app import models
@@ -23,6 +23,10 @@ def search_with_isbn(bookISBN):
     recently_searched = cache_manager.get_all()
     bookISBN = str(bookISBN)
     [book_title, goodreadsURL] = find.title(bookISBN)
+    
+    if book_title == "book unavailable":
+        flash("Couldn't find that book")
+        return render_template('base.html', recently_searched=recently_searched)
         
     # check if book already exists in cache
     if cache_manager.check(bookISBN):
@@ -47,6 +51,10 @@ def search_with_name(book_title):
     recently_searched = cache_manager.get_all()
     
     [book_title, goodreadsURL] = find.title(book_title)
+    
+    if book_title == "book unavailable":
+        flash("Couldn't find that book")
+        return render_template('base.html', recently_searched=recently_searched)
     
     # check if book already exists in cache
     if cache_manager.check(book_title):

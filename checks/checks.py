@@ -47,7 +47,7 @@ def blackwells(search_term: str):
         return [elem.text, blackwellsURL]
     except:
         # if we're taken to the search page
-        price = dom.xpath("//*[@class='search-result']/ul[1]/li[1]/div/div[2]/div/ul/li[1]")[0]
+        price = dom.xpath("//*[@class='product-price--current']")[0]
         url = dom.xpath("//*[@class='search-result']/ul[1]/li[1]/a/@href")[0]
         return [price.text, "https://blackwells.co.uk" + url]
     else:
