@@ -22,7 +22,7 @@ def index():
 def search_with_isbn(bookISBN):
     recently_searched = cache_manager.get_all()
     bookISBN = str(bookISBN)
-    [book_title, goodreadsURL] = find.title(bookISBN)
+    [book_title, goodreadsURL] = find.info(bookISBN)
     
     if book_title == "book unavailable":
         flash("Couldn't find that book")
@@ -49,18 +49,17 @@ def search_with_isbn(bookISBN):
 @app.route('/<book_title>', methods=['POST', 'GET'])
 def search_with_name(book_title):
     recently_searched = cache_manager.get_all()
-    
-    [book_title, goodreadsURL] = find.title(book_title)
-    
-    if book_title == "book unavailable":
-        flash("Couldn't find that book")
-        return render_template('base.html', recently_searched=recently_searched)
-    
+
     # check if book already exists in cache
     if cache_manager.check(book_title):
         display_book = cache_manager.get(book_title)
         return render_template('main.html', book=display_book, recently_searched=recently_searched)
     
+    [book_title, goodreadsURL] = find.info(book_title)
+    
+    if book_title == "book unavailable":
+        flash("Couldn't find that book")
+        return render_template('base.html', recently_searched=recently_searched)
     
     # get price
     waterstones = checks.waterstones(book_title)

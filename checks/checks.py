@@ -66,12 +66,13 @@ def wob(search_term: str):
     try:
         # if taken to the product page
         elem = soup.find(class_="price")
-        return [elem.text, wobURL]
+        wob_info = [elem.text, wobURL]
     except:
         # if taken to the search page
-        price = dom.xpath("//*[@class='productList']/div[1]/div[1]/div[1]/div[2]")[0]
+        price = dom.xpath("//*[@class='itemPrice']")[0]
         url = dom.xpath("//*[@class='productList']/div[1]/div[1]/a[1]/@href")[0]
-        return [price.text, "https://www.wob.com" + url]
-    else:
-        return ["unavailable on wob", wobURL]
+        wob_info = [price.text, "https://www.wob.com" + url]
+    finally:
+        wob_info = ["unavailable on wob", wobURL]
+    return wob_info
 
