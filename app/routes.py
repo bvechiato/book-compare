@@ -18,6 +18,7 @@ def index():
     else: 
         return render_template('base.html', recently_searched=recently_searched)
     
+    
 @app.route('/<int:bookISBN>', methods=['POST', 'GET'])
 def search_with_isbn(bookISBN):
     recently_searched = cache_manager.get_all()
@@ -34,7 +35,7 @@ def search_with_isbn(bookISBN):
     wob = checks.wob(bookISBN)
     blackwells = checks.blackwells(bookISBN)
         
-    new_book = models.Book(bookISBN, book_title, goodreadsURL, wob[0], waterstones[0], blackwells[0], wob[1], waterstones[1], blackwells[1])
+    new_book = models.Book(bookISBN, book_title, "", goodreadsURL, wob[0], waterstones[0], blackwells[0], wob[1], waterstones[1], blackwells[1])
     cache_manager.set(bookISBN, new_book)
     display_book = str(new_book).split(", ")
         
