@@ -21,19 +21,34 @@ def title(search_term: str) -> list[str]:
     
     dom = etree.HTML(str(soup))
     
-    print(dom)
-
     # Find title
     try:
+        # If we're taken to search page
         title = dom.xpath("//table/tr[1]/td[1]/a/@title")[0]       
     except:
+        # if we're taken to the product page
+        title = dom.xpath("//*[@id='bookTitle']")[0]
+        title = title.text       
+    else:
         return ["book unavailable", "https://www.goodreads.com"]
     
     # Find url
     try:
-        url = dom.xpath("//table/tr[1]/td[1]/a/@href")[0]        
+        # If we're taken to the search page
+        url = dom.xpath("//table/tr[1]/td[1]/a/@href")[0]
+        url = "https://www.goodreads.com" + url        
     except:
+        # If we're taken to the product page
+        url = goodreadsURL
+    else:
         return [title, "https://www.goodreads.com"]
     
+    # Find author
+    try: 
+        # If we're taken to the search or product page
+        author = dom.xpath("//*[@class='authorName']/span")[0]
+    except:
+        return [title, url, ""]
     
-    return [title, "https://www.goodreads.com" + url]
+    
+    return [title, url, author.text]

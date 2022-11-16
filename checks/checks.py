@@ -46,7 +46,7 @@ def blackwells(search_term: str):
             elem = soup.select_one("#main-content > div.product_page > div.container.container--50.u-relative > div:nth-child(2) > div > div.product__price > div > ul > li.product-price--current")
         return [elem.text, blackwellsURL]
     except:
-        # if we're taken to the search page
+        # if we're taken to the search page 
         price = dom.xpath("//*[@class='search-result']/ul[1]/li[1]/div/div[2]/div/ul/li[1]")[0]
         url = dom.xpath("//*[@class='search-result']/ul[1]/li[1]/a/@href")[0]
         return [price.text, "https://blackwells.co.uk" + url]
@@ -69,9 +69,10 @@ def wob(search_term: str):
         return [elem.text, wobURL]
     except:
         # if taken to the search page
-        price = dom.xpath("//*[@class='productList']/div[1]/div[1]/div[1]/div[2]")[0]
-        url = dom.xpath("//*[@class='productList']/div[1]/div[1]/a[1]/@href")[0]
-        return [price.text, "https://www.wob.com" + url]
-    else:
-        return ["unavailable on wob", wobURL]
+        try: 
+            price = dom.xpath("//*[@class='productList']/div[1]/div[1]/div[1]/div[2]")[0]
+            url = dom.xpath("//*[@class='productList']/div[1]/div[1]/a[1]/@href")[0]
+            return [price.text, "https://www.wob.com" + url]
+        except:
+            return ["unavailable on wob", wobURL]
 
