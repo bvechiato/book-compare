@@ -38,7 +38,8 @@ def search_with_isbn(bookISBN):
     wob = checks.wob(bookISBN)
     blackwells = checks.blackwells(bookISBN)
         
-    new_book = models.Book(bookISBN, book_title, author, goodreadsURL, wob[0], waterstones[0], blackwells[0], wob[1], waterstones[1], blackwells[1])
+    new_book = models.Book(bookISBN, book_title, author, goodreadsURL, wob[0], waterstones[0], blackwells[0], wob[1],
+                           waterstones[1], blackwells[1])
     cache_manager.set(bookISBN, new_book)
     display_book = str(new_book).split(", ")
         
@@ -56,14 +57,14 @@ def search_with_name(book_title):
     if cache_manager.check(book_title):
         display_book = cache_manager.get(book_title)
         return render_template('main.html', book=display_book, recently_searched=recently_searched)
-    
-    
+
     # get price
     waterstones = checks.waterstones(book_title)
     wob = checks.wob(book_title)
     blackwells = checks.blackwells(book_title)
         
-    new_book = models.Book("", book_title, author, goodreadsURL, wob[0], waterstones[0], blackwells[0], wob[1], waterstones[1], blackwells[1])
+    new_book = models.Book("", book_title, author, goodreadsURL, wob[0], waterstones[0], blackwells[0], wob[1],
+                           waterstones[1], blackwells[1])
     cache_manager.set(book_title, new_book)
     display_book = str(new_book).split(", ")
         

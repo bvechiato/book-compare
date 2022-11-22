@@ -3,6 +3,7 @@ from app.models import Book
 
 r = redis.Redis(host='localhost', port=6379)
 
+
 def check(key: str) -> bool:
     """Takes a key and checks if it exists in cache
 
@@ -12,11 +13,13 @@ def check(key: str) -> bool:
     Returns:
         bool: exists in cache or not
     """
-    return r.exists(key)
+    return r.exists(key) == 1
+
 
 def set(key: str, value: Book):
     value = str(value)
     r.setex(key, 172800, value)
+
 
 def get(key: str) -> list[str]:
     """Takes the key and returns the book object in a string
@@ -29,6 +32,7 @@ def get(key: str) -> list[str]:
     """
     decoded = r.get(key).decode('UTF-8')
     return decoded.split(", ")
+
 
 def get_all() -> list[list[str]]:
     """Gets all keys and values stored in cache
