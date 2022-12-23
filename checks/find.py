@@ -76,8 +76,9 @@ def title(search_term: str) -> list[str]:
     try:
         # If we're taken to search page
         found = dom.xpath("//*[@id='searchresults']/li[1]/div[2]/h2/a")[0]
+        found = found.text
     except IndexError:
-        return ["book unavailable", "", ""]
+        return ["book unavailable", "", "", ""]
 
     url = "https://isbnsearch.org" + found.get("href")
 
@@ -85,6 +86,16 @@ def title(search_term: str) -> list[str]:
     try:
         # If we're taken to the search or product page
         author = dom.xpath("//*[@id='searchresults']/li[1]/div[2]/p[1]")[0]
+        author = author.text[8::]
     except IndexError:
-        return [found.text, url, ""]
-    return [found.text, url, author.text]
+        return [found, url, "", ""]
+
+    # Find isbn
+    try:
+        # If we're taken to the search or product page
+        isbn = dom.xpath("// *[ @ id = 'searchresults'] / li[1] / div[2] / p[2]")[0]
+        isbn = isbn.text[9::]
+    except IndexError:
+        return [found, url, author, ""]
+
+    return [found, url, author, isbn]

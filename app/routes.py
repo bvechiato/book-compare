@@ -51,7 +51,7 @@ def search_with_isbn(bookISBN):
 def search_with_name(book_title):
     recently_searched = cache_manager.get_all()
     
-    [book_title, goodreadsURL, author] = find.title(book_title)
+    [book_title, search_url, author, isbn] = find.title(book_title)
     
     # check if book already exists in cache
     if cache_manager.check(book_title):
@@ -59,13 +59,13 @@ def search_with_name(book_title):
         return render_template('main.html', book=display_book, recently_searched=recently_searched)
 
     # get price
-    waterstones = checks.waterstones(book_title)
-    wob = checks.wob(book_title)
-    blackwells = checks.blackwells(book_title)
+    waterstones = checks.waterstones(isbn)
+    wob = checks.wob(isbn)
+    blackwells = checks.blackwells(isbn)
         
-    new_book = models.Book("", book_title, author, goodreadsURL, wob[0], waterstones[0], blackwells[0], wob[1],
+    new_book = models.Book(isbn, book_title, author, search_url, wob[0], waterstones[0], blackwells[0], wob[1],
                            waterstones[1], blackwells[1])
-    cache_manager.set(book_title, new_book)
+    cache_manager.set(isbn, new_book)
     display_book = str(new_book).split(", ")
         
     recently_searched = cache_manager.get_all()
