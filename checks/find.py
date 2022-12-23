@@ -3,58 +3,21 @@ from lxml import etree
 import cloudscraper
 
 
-# def title(search_term: str) -> list[str]:
-#     """Scrapes the search result and returns the first's title
-#
-#     Args:
-#         search_term (str): input by the user
-#
-#     Returns:
-#         str: title
-#     """
-#     scraper = cloudscraper.create_scraper()
-#     goodreadsURL = "https://www.goodreads.com/search?q=" + search_term.replace(' ', '+')
-#     print("goodreadsURL: " + goodreadsURL)
-#
-#     data = scraper.get(goodreadsURL).content
-#     soup = BeautifulSoup(data, 'lxml')
-#
-#     dom = etree.HTML(str(soup))
-#
-#     # Find title
-#     try:
-#         # If we're taken to search page
-#         found_title = dom.xpath("//table/tr[1]/td[1]/a/@title")[0]
-#     except IndexError:
-#         # if we're taken to the product page
-#         try:
-#             found_title = dom.xpath("//*[@id='bookTitle']")[0]
-#             found_title = found_title.text
-#         except IndexError:
-#             return ["book unavailable", "https://www.goodreads.com", ""]
-#
-#     # Find url
-#     try:
-#         # If we're taken to the search page
-#         url = dom.xpath("//table/tr[1]/td[1]/a/@href")[0]
-#         url = "https://www.goodreads.com" + url
-#     except IndexError:
-#         # If we're taken to the product page
-#         try:
-#             url = goodreadsURL
-#         except IndexError:
-#             return [found_title, "https://www.goodreads.com", ""]
-#
-#     # Find author
-#     try:
-#         # If we're taken to the search or product page
-#         author = dom.xpath("//*[@class='authorName']/span")[0]
-#     except IndexError:
-#         return [found_title, url, ""]
-#     return [found_title, url, author.text]
+def format_author(author):
+    """
+    Input comes in as "Surname, Forename"
+    Args:
+        author: author name
+
+    Returns:
+        Forename Surname
+    """
+    temp = author.split(", ")
+    author = temp[1] + " " + temp[0]
+    return author
 
 
-def title(search_term: str) -> list[str]:
+def find(search_term: str) -> list[str]:
     """Scrapes the search result and returns the first's title
 
         Args:
@@ -78,7 +41,7 @@ def title(search_term: str) -> list[str]:
         isbn = dom.xpath("//*[@id='searchresults']/li[1]/div[2]/p[2]")[0]
         isbn = isbn.text[9::]
     except IndexError:
-        return ["", "", "", "", ""]
+        return ["", "", "", ""]
 
     # Find title
     try:
@@ -95,7 +58,7 @@ def title(search_term: str) -> list[str]:
     try:
         # If we're taken to the search or product page
         author = dom.xpath("//*[@id='searchresults']/li[1]/div[2]/p[1]")[0]
-        author = author.text[8::]
+        author = format_author(author.text[8::])
     except IndexError:
         return [found, url, "", isbn]
     return [found, url, author, isbn]

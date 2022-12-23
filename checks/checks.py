@@ -4,6 +4,13 @@ import cloudscraper
 
 
 def waterstones(search_term: str):
+    """
+        Args:
+            search_term:
+
+        Returns:
+            [price, url]
+        """
     scraper = cloudscraper.create_scraper()
     waterstonesURL = "https://www.waterstones.com/books/search/term/" + search_term.replace(' ', '+')
     print("waterstonesURL: " + waterstonesURL)
@@ -34,6 +41,13 @@ def waterstones(search_term: str):
 
 
 def blackwells(search_term: str):
+    """
+    Args:
+        search_term:
+
+    Returns:
+        [price, url]
+    """
     scraper = cloudscraper.create_scraper()
     blackwellsURL = "https://blackwells.co.uk/bookshop/search/?keyword=" + search_term.replace(' ', '+')
     print("blackwellsURL: " + blackwellsURL)
@@ -63,6 +77,13 @@ def blackwells(search_term: str):
 
 
 def wob(search_term: str):
+    """
+        Args:
+            search_term:
+
+        Returns:
+            [price, url]
+    """
     scraper = cloudscraper.create_scraper()
     wobURL = "https://www.wob.com/en-gb/category/all?search=" + search_term.replace(' ', '+')
     print("wobURL: " + wobURL)

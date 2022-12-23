@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect
-from checks import checks, find
+from checks import checks
+from checks.find import find as find
 from app import app, cache_manager
 from app import models
 
@@ -20,51 +21,28 @@ def index():
         return redirect(f'/{bookISBN}')
     else: 
         return render_template('base.html', recently_searched=recently_searched)
-    
-    
-@app.route('/<int:bookISBN>', methods=['POST', 'GET'])
-def search_with_isbn(bookISBN):
+
+
+@app.route('/<search_term>', methods=['POST', 'GET'])
+def search_with_name(search_term):
     recently_searched = cache_manager.get_all()
-    bookISBN = str(bookISBN)
-    [book_title, goodreadsURL, author] = find.title(bookISBN)
-        
+
     # check if book already exists in cache
-    if cache_manager.check(bookISBN):
-        display_book = cache_manager.get(bookISBN)
+    if cache_manager.check(search_term):
+        print("book already exists in cache")
+        display_book = cache_manager.get(search_term)
         return render_template('main.html', book=display_book, recently_searched=recently_searched)
+    
+    [book_title, search_url, author, isbn] = find(search_term)
 
     # get price
-    waterstones = checks.waterstones(bookISBN)
-    wob = checks.wob(bookISBN)
-    blackwells = checks.blackwells(bookISBN)
+    waterstones_price, waterstones_url = checks.waterstones(isbn)
+    wob_price, wob_url = checks.wob(isbn)
+    blackwells_price, blackwells_url = checks.blackwells(isbn)
         
-    new_book = models.Book(bookISBN, book_title, author, goodreadsURL, wob[0], waterstones[0], blackwells[0], wob[1],
-                           waterstones[1], blackwells[1])
-    cache_manager.set(bookISBN, new_book)
-    display_book = str(new_book).split(", ")
-        
-    recently_searched = cache_manager.get_all()
-    return render_template('main.html', book=display_book, recently_searched=recently_searched)
+    new_book = models.Book(isbn, book_title, author, search_url, wob_price, waterstones_price, blackwells_price, wob_url,
+                           waterstones_url, blackwells_url)
 
-
-@app.route('/<book_title>', methods=['POST', 'GET'])
-def search_with_name(book_title):
-    recently_searched = cache_manager.get_all()
-    
-    [book_title, search_url, author, isbn] = find.title(book_title)
-    
-    # check if book already exists in cache
-    if cache_manager.check(book_title):
-        display_book = cache_manager.get(book_title)
-        return render_template('main.html', book=display_book, recently_searched=recently_searched)
-
-    # get price
-    waterstones = checks.waterstones(isbn)
-    wob = checks.wob(isbn)
-    blackwells = checks.blackwells(isbn)
-        
-    new_book = models.Book(isbn, book_title, author, search_url, wob[0], waterstones[0], blackwells[0], wob[1],
-                           waterstones[1], blackwells[1])
     cache_manager.set(isbn, new_book)
     display_book = str(new_book).split(", ")
         

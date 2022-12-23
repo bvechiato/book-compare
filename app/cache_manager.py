@@ -31,7 +31,9 @@ def get(key: str) -> list[str]:
         list[str]: book object in a string
     """
     decoded = r.get(key).decode('UTF-8')
-    return decoded.split(", ")
+    decoded = decoded.split(", ")
+    print(decoded)
+    return decoded
 
 
 def get_all() -> list[list[str]]:
