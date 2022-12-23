@@ -12,21 +12,26 @@ def waterstones(search_term: str):
     soup = BeautifulSoup(data, 'lxml')
 
     dom = etree.HTML(str(soup))
-    
+
     try:
-        # if we're taken to the product page
-        try:
-            elem = dom.xpath("//*[@itemprop='price']")[0]
-        except:
-            elem = soup.select_one("body > div.main-container > div.main-page.row > div:nth-child(2) > section.book-detail.span12.alpha.omega > div.span7.mobile-span12.alpha.tablet-alpha > div.book-actions > div > div > div > div.price > div > b")
+        elem = dom.xpath("//*[@itemprop='price']")[0]
         return [elem.text, waterstonesURL]
-    except:
+    except IndexError:
+        elem = soup.select_one(
+            "body > div.main-container > div.main-page.row > div:nth-child(2) > "
+            "section.book-detail.span12.alpha.omega > div.span7.mobile-span12.alpha.tablet-alpha > div.book-actions > "
+            "div > div > div > div.price > div > b")
+        if elem is not None:
+            return [elem.text, waterstonesURL]
+
+    try:
         # if we're taken to the search page
         price = dom.xpath("//*[@class='search-results-list']/div[1]/div[1]/div[2]/div[2]/span[2]")[0]
         url = dom.xpath("//*[@class='search-results-list']/div[1]/div[1]/div[2]/span/a/@href")[0]
         return [price.text, "https://waterstones.com/" + url]
-    else:
-        return ["unavailable on waterstones", waterstonesURL]
+    except IndexError:
+        return ["unavailable", waterstonesURL]
+
 
 def blackwells(search_term: str):
     scraper = cloudscraper.create_scraper()
@@ -40,18 +45,22 @@ def blackwells(search_term: str):
     
     try:
         # if we're taken to the product page
-        try:
-            elem = dom.xpath("//*[@id='main-content']/div[2]/div[1]/div[2]/div/div[1]/div/ul/li[2]")[0]
-        except:
-            elem = soup.select_one("#main-content > div.product_page > div.container.container--50.u-relative > div:nth-child(2) > div > div.product__price > div > ul > li.product-price--current")
+        elem = dom.xpath("//*[@id='main-content']/div[2]/div[1]/div[2]/div/div[1]/div/ul/li[2]")[0]
         return [elem.text, blackwellsURL]
-    except:
-        # if we're taken to the search page
-        price = dom.xpath("//*[@class='product-price--current']")[0]
+    except IndexError:
+        elem = soup.select_one("#main-content > div.product_page > div.container.container--50.u-relative > "
+                               "div:nth-child(2) > div > div.product__price > div > ul > li.product-price--current")
+        if elem is not None:
+            return [elem.text, blackwellsURL]
+
+    try:
+        # if we're taken to the search page 
+        price = dom.xpath("//*[@class='search-result']/ul[1]/li[1]/div/div[2]/div/ul/li[1]")[0]
         url = dom.xpath("//*[@class='search-result']/ul[1]/li[1]/a/@href")[0]
         return [price.text, "https://blackwells.co.uk" + url]
-    else:
-        return ["unavailable on blackwells", blackwellsURL]
+    except IndexError:
+        return ["unavailable", blackwellsURL]
+
 
 def wob(search_term: str):
     scraper = cloudscraper.create_scraper()
@@ -63,16 +72,15 @@ def wob(search_term: str):
     
     dom = etree.HTML(str(soup))
 
+    # if taken to the product page
+    elem = soup.find(class_="price")
+    if elem is not None:
+        return [elem.text, wobURL]
+
     try:
-        # if taken to the product page
-        elem = soup.find(class_="price")
-        wob_info = [elem.text, wobURL]
-    except:
-        # if taken to the search page
-        price = dom.xpath("//*[@class='itemPrice']")[0]
+        price = dom.xpath("//*[@class='productList']/div[1]/div[1]/div[1]/div[2]")[0]
         url = dom.xpath("//*[@class='productList']/div[1]/div[1]/a[1]/@href")[0]
-        wob_info = [price.text, "https://www.wob.com" + url]
-    finally:
-        wob_info = ["unavailable on wob", wobURL]
-    return wob_info
+        return [price.text, "https://www.wob.com" + url]
+    except IndexError:
+        return ["unavailable", wobURL]
 
