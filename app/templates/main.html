@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h3 class="text-m text-gray-900 block mb-3 dark:text-gray-300 mt-5"><a href="{{ book[3] }}" class="font-medium">{{ book[1] }}</a> <span class="font-light">by {{ book[2] }} ({{ book[0] }})</span></h3>
+<h3 class="text-m text-gray-900 block mb-3 dark:text-gray-300 mt-5"><a href="{{ book['url_search'] }}" class="font-medium">{{ book['title'] }}</a> <span class="font-light">by {{ book['author'] }} ({{ book['isbn'] }})</span></h3>
                   
 <table class="table-auto w-full dark:text-gray-300">
     <colgroup>
@@ -10,18 +10,18 @@
     </colgroup>
     <tr> 
         <!-- wob -->
-        <td><a href="{{ book[7] }}" class="hover:font-medium dark:text-gray-300">Wob</a></td>
-        <td>{{ book[4] }}</td>
+        <td><a href="{{ book['url_wob'] }}" class="hover:font-medium dark:text-gray-300">Wob</a></td>
+        <td>{{ book['price_wob'] }}</td>
     </tr>
     <tr>
         <!-- waterstones -->
-        <td><a href="{{ book[8] }}" class="hover:font-medium dark:text-gray-300">Waterstones</a></td>
-        <td>{{ book[5] }}</td>
+        <td><a href="{{ book['url_waterstones'] }}" class="hover:font-medium dark:text-gray-300">Waterstones</a></td>
+        <td>{{ book['price_waterstones'] }}</td>
     </tr>
     <tr>
         <!-- blackwells -->
-        <td><a href="{{ book[9] }}" class="hover:font-medium dark:text-gray-300">Blackwells</a></td>
-        <td>{{ book[6] }}</td>
+        <td><a href="{{ book['url_blackwells'] }}" class="hover:font-medium dark:text-gray-300">Blackwells</a></td>
+        <td>{{ book['price_blackwells'] }}</td>
     </tr>
 </table>
 {% endblock %}
