@@ -1,4 +1,3 @@
-from dataclasses import asdict
 from flask import render_template, request, redirect
 from checks import checks
 from checks.find import find as find
@@ -46,7 +45,7 @@ def search_with_name(search_term):
                            waterstones_url.strip(), blackwells_url.strip())
 
     cache_manager.set(isbn, new_book)
-    display_book = asdict(new_book)
+    display_book = str(new_book).split(", ")
         
     recently_searched = cache_manager.get_all()
     return render_template('main.html', book=display_book, recently_searched=recently_searched)
