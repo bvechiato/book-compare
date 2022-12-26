@@ -9,14 +9,13 @@ from app import models
 def index():
     recently_searched = cache_manager.get_all()
     if request.method == 'POST':
+        # get values from form
         bookISBN = request.form['bookISBN']
         book_title = request.form['bookName']
         book_author = request.form['author']
 
         # if isbn isn't entered
         if bookISBN == "":
-            if book_author == "":
-                return redirect(f'/{book_title}')
             return redirect(f'/{book_title}+{book_author}')
         return redirect(f'/{bookISBN}')
     else: 
@@ -39,13 +38,16 @@ def search_with_name(search_term):
     waterstones_price, waterstones_url = checks.waterstones(isbn)
     wob_price, wob_url = checks.wob(isbn)
     blackwells_price, blackwells_url = checks.blackwells(isbn)
-        
+
+    # create new book
     new_book = models.Book(isbn.strip(), book_title.strip(), author.strip(), search_url.strip(),
                            wob_price.strip(), waterstones_price.strip(), blackwells_price.strip(), wob_url.strip(),
                            waterstones_url.strip(), blackwells_url.strip())
 
+    # set cache
     cache_manager.set(isbn, new_book)
     display_book = str(new_book).split(", ")
-        
+
+    # get cache to render
     recently_searched = cache_manager.get_all()
     return render_template('main.html', book=display_book, recently_searched=recently_searched)

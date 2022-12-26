@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10bd5ff5-fd11-4439-8787-fa88911672c9" name="Changes" comment="Fixed cache management">
+    <list default="true" id="10bd5ff5-fd11-4439-8787-fa88911672c9" name="Changes" comment="SearchISBN tweakin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cache_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cache_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/footer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/dump.rdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671824448180</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="SearchISBN tweakin">
+      <created>1671911070588</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1671911070588</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -127,6 +132,7 @@
     <MESSAGE value="Resolved" />
     <MESSAGE value="Fixed night mode" />
     <MESSAGE value="Fixed cache management" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed cache management" />
+    <MESSAGE value="SearchISBN tweakin" />
+    <option name="LAST_COMMIT_MESSAGE" value="SearchISBN tweakin" />
   </component>
 </project>
