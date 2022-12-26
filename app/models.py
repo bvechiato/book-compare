@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from checks import checks
+from checks import price
 from checks.find import find as find
 import cache_manager
 
@@ -8,9 +8,9 @@ def config_book(search_term):
     [book_title, search_url, author, isbn] = find(search_term)
 
     # get price
-    waterstones_price, waterstones_url = checks.waterstones(isbn)
-    wob_price, wob_url = checks.wob(isbn)
-    blackwells_price, blackwells_url = checks.blackwells(isbn)
+    waterstones_price, waterstones_url = price.waterstones(isbn)
+    wob_price, wob_url = price.wob(isbn)
+    blackwells_price, blackwells_url = price.blackwells(isbn)
 
     # create new book
     new_book = Book(isbn.strip(), book_title.strip(), author.strip(), search_url.strip(),
