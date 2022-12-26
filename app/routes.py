@@ -1,6 +1,4 @@
 from flask import render_template, request, redirect
-from checks import checks
-from checks.find import find as find
 from app import app, cache_manager
 from app import models
 
@@ -28,25 +26,10 @@ def search_with_name(search_term):
 
     # check if book already exists in cache
     if cache_manager.check(search_term):
-        print("book already exists in cache")
         display_book = cache_manager.get(search_term)
         return render_template('main.html', book=display_book, recently_searched=recently_searched)
     
-    [book_title, search_url, author, isbn] = find(search_term)
-
-    # get price
-    waterstones_price, waterstones_url = checks.waterstones(isbn)
-    wob_price, wob_url = checks.wob(isbn)
-    blackwells_price, blackwells_url = checks.blackwells(isbn)
-
-    # create new book
-    new_book = models.Book(isbn.strip(), book_title.strip(), author.strip(), search_url.strip(),
-                           wob_price.strip(), waterstones_price.strip(), blackwells_price.strip(), wob_url.strip(),
-                           waterstones_url.strip(), blackwells_url.strip())
-
-    # set cache
-    cache_manager.set(isbn, new_book)
-    display_book = str(new_book).split(", ")
+    display_book = models.config_book(search_term)
 
     # get cache to render
     recently_searched = cache_manager.get_all()

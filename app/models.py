@@ -1,4 +1,27 @@
 from dataclasses import dataclass
+from checks import checks
+from checks.find import find as find
+import cache_manager
+
+
+def config_book(search_term):
+    [book_title, search_url, author, isbn] = find(search_term)
+
+    # get price
+    waterstones_price, waterstones_url = checks.waterstones(isbn)
+    wob_price, wob_url = checks.wob(isbn)
+    blackwells_price, blackwells_url = checks.blackwells(isbn)
+
+    # create new book
+    new_book = Book(isbn.strip(), book_title.strip(), author.strip(), search_url.strip(),
+                    wob_price.strip(), waterstones_price.strip(), blackwells_price.strip(), wob_url.strip(),
+                    waterstones_url.strip(), blackwells_url.strip())
+
+    # set cache
+    cache_manager.set(isbn, new_book)
+    display_book = str(new_book).split(", ")
+
+    return display_book
 
 
 @dataclass
