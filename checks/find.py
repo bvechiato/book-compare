@@ -17,7 +17,7 @@ def format_author(author):
     return author
 
 
-def find(search_term: str) -> list[str]:
+def book_info(search_term: str) -> list[str]:
     """Scrapes the search result and returns the first's title
 
         Args:

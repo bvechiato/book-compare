@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from checks import price
-from checks.find import find as find
+from checks import price, find
 import cache_manager
 
 
 def config_book(search_term):
-    [book_title, search_url, author, isbn] = find(search_term)
+    [book_title, search_url, author, isbn] = find.book_info(search_term)
 
     # get price
     waterstones_price, waterstones_url = price.waterstones(isbn)
