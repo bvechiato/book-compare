@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect
 from app import app, cache_manager
+from checks.spelling import check_spelling, check_isbn
 from app import models
 
 
@@ -11,11 +12,22 @@ def index():
         bookISBN = request.form['bookISBN']
         book_title = request.form['bookName']
         book_author = request.form['author']
+        has_error: bool = False
+
+        # validate isbn
+        has_error, error_message = check_isbn(bookISBN)
+
+        # validate title
+        has_error, error_message = check_spelling(book_title)
+
+        if has_error:
+            return render_template('base.html', error=error_message, recently_searched=recently_searched)
 
         # if isbn isn't entered
         if bookISBN == "":
             return redirect(f'/{book_title}+{book_author}')
         return redirect(f'/{bookISBN}')
+
     else: 
         return render_template('base.html', recently_searched=recently_searched)
 

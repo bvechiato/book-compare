@@ -28,3 +28,4 @@ selenium~=4.7.2
 pyparsing~=3.0.9
 wsproto~=1.2.0
 cloudscraper~=1.2.66
+pyenchant
