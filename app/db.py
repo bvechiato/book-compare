@@ -21,3 +21,13 @@ def add_book(book_isbn: str, book_data: dict):
 
 def get_book(book_isbn: str) -> dict:
     return database.child("Book").child(book_isbn).get().val()
+
+
+def add_blacklist(book_isbn: str):
+    database.child("Blacklist").push(book_isbn)
+
+
+def get_blacklist() -> list[str]:
+    packed = database.child("Blacklist").get().val()
+    blacklist = [y for x, y in packed.items()]
+    return blacklist

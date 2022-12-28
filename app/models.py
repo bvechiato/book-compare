@@ -16,8 +16,8 @@ class Book:
     url_blackwells: str
         
     def __str__(self) -> str:
-        return f"{self.isbn}, {self.title}, {self.author}, " \
-               f"{self.price_wob}, {self.price_waterstones}, {self.price_blackwells}, {self.url_wob}, " \
+        return f"{self.isbn}, {self.title}, {self.author}, {self.price_wob}, " \
+               f"{self.price_waterstones}, {self.price_blackwells}, {self.url_wob}, " \
                f"{self.url_waterstones}, {self.url_blackwells}"
 
     def make_dict(self) -> dict:
@@ -38,6 +38,9 @@ def config_book(isbn) -> Book:
     waterstones_price, waterstones_url = price.waterstones(isbn)
     wob_price, wob_url = price.wob(isbn)
     blackwells_price, blackwells_url = price.blackwells(isbn)
+
+    if waterstones_price == "unavailable" and wob_price == "unavailable" and blackwells_price == "unavailable":
+        db.add_blacklist(isbn)
 
     # create new book
     new_book = Book(isbn.strip(), book_title.strip(), author.strip(),

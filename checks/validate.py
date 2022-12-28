@@ -1,5 +1,6 @@
 # import enchant
 import requests
+from app import db
 
 
 # this doesn't work rn, enchant doesn't work on silicon
@@ -68,10 +69,16 @@ def title(book_title: str, author: str = None) -> tuple[bool, str, str]:
 
     response = requests.get(url, params=params)
     response_dict = response.json()
-    try:
-        isbn_type = response_dict['items'][0]['volumeInfo']['industryIdentifiers'][0]['type']
-        if isbn_type == "ISBN_13" or isbn_type == "ISBN_10":
-            found_isbn = response_dict['items'][0]['volumeInfo']['industryIdentifiers'][0]['identifier']
-            return False, "", found_isbn
-    except KeyError:
-        return True, "Couldn't find a book with that title and author, please check your spelling and try again.", ""
+    found_isbn = "1234567891011"
+
+    current = -1
+    blacklist = db.get_blacklist()
+    while found_isbn in blacklist:
+        current += 1
+        try:
+            isbn_type = response_dict['items'][current]['volumeInfo']['industryIdentifiers'][0]['type']
+            if isbn_type == "ISBN_13":
+                found_isbn = response_dict['items'][current]['volumeInfo']['industryIdentifiers'][0]['identifier']
+        except KeyError:
+            return True, "Couldn't find a book with that title and author, please check spelling and try again.", ""
+    return False, "", found_isbn
