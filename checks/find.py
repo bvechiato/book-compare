@@ -1,64 +1,22 @@
-from bs4 import BeautifulSoup
-from lxml import etree
-import cloudscraper
+import requests
 
 
-def format_author(author):
+def with_isbn(book_isbn: str):
     """
-    Input comes in as "Surname, Forename"
+
     Args:
-        author: author name
+        book_isbn:
 
     Returns:
-        Forename Surname
+        title, author, google_dict
     """
-    temp = author.split(", ")
-    author = temp[1] + " " + temp[0]
-    return author
+    query = 'isbn:' + book_isbn
+    params = {"q": query}
+    url = r'https://www.googleapis.com/books/v1/volumes'
 
+    response = requests.get(url, params=params)
+    response_dict = response.json()
 
-def book_info(search_term: str) -> list[str]:
-    """Scrapes the search result and returns the first's title
-
-        Args:
-            search_term (str): input by the user
-
-        Returns:
-            str: title
-        """
-    scraper = cloudscraper.create_scraper()
-    isbn_search_url = "https://isbnsearch.org/search?s=" + search_term.replace(' ', '+')
-    print("isbn_search_url: " + isbn_search_url)
-
-    data = scraper.get(isbn_search_url).content
-    soup = BeautifulSoup(data, 'lxml')
-
-    dom = etree.HTML(str(soup))
-
-    # Find ISBN
-    try:
-        # If we're taken to the search or product page
-        isbn = dom.xpath("//*[@id='searchresults']/li[1]/div[2]/p[2]")[0]
-        isbn = isbn.text[9::]
-    except IndexError:
-        return ["", "", "", ""]
-
-    # Find title
-    try:
-        # If we're taken to search page
-        found = dom.xpath("//*[@id='searchresults']/li[1]/div[2]/h2/a")[0]
-        url = found.get("href")
-        found = found.text
-    except IndexError:
-        return ["book unavailable", "", "", isbn]
-
-    url = "https://isbnsearch.org" + url
-
-    # Find author
-    try:
-        # If we're taken to the search or product page
-        author = dom.xpath("//*[@id='searchresults']/li[1]/div[2]/p[1]")[0]
-        author = format_author(author.text[8::])
-    except IndexError:
-        return [found, url, "", isbn]
-    return [found, url, author, isbn]
+    author = response_dict['items'][0]["volumeInfo"]['authors'][0]
+    title = response_dict['items'][0]["volumeInfo"]['title']
+    return title, author, response_dict
