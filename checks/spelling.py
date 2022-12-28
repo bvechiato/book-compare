@@ -1,6 +1,7 @@
 import enchant
 
 
+# this doesn't work rn, enchant doesn't work on silicon
 def check_spelling(key_term: str) -> tuple[bool, str]:
     """
 
