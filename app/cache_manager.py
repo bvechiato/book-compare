@@ -1,5 +1,4 @@
 import redis
-from app.models import Book
 
 r = redis.Redis(host='localhost', port=6379)
 
@@ -14,7 +13,7 @@ def check(key: str) -> bool:
     return r.exists(key) == 1
 
 
-def set(key: str, value: Book):
+def set(key: str, value):
     value = str(value)
     r.setex(key, 172800, value)
 
@@ -33,7 +32,8 @@ def get(key: str) -> list[str]:
 def get_all() -> list[list[str]]:
     """Gets all keys and values stored in cache
     Returns:
-        list[list[str]]: 2D list of all books stored in cache as strings in the format [[isbn, title, url_goodreads, price_wob, price_waterstones, price_blackwells, url_wob, url_waterstones, url_blackwells], [...]]
+        list[list[str]]: 2D list of all books stored in cache as strings in the format [[isbn, title, url_goodreads,
+        price_wob, price_waterstones, price_blackwells, url_wob, url_waterstones, url_blackwells], [...]]
     """
     # get keys
     keys = r.keys()

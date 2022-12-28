@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from checks import price, find
-import cache_manager
+from app import cache_manager
 
 
 def config_book(search_term):

@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect
 from app import app, cache_manager
-from checks.spelling import check_spelling, check_isbn
+from checks.spelling import check_isbn
 from app import models
 
 
