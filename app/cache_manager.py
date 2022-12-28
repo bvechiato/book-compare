@@ -1,4 +1,5 @@
 import redis
+from app.models import Book, create_from_str
 
 r = redis.Redis(host='localhost', port=6379)
 
@@ -13,12 +14,12 @@ def check(key: str) -> bool:
     return r.exists(key) == 1
 
 
-def set(key: str, value):
+def set(key: str, value: Book):
     value = str(value)
     r.setex(key, 172800, value)
 
 
-def get(key: str) -> list[str]:
+def get(key: str) -> Book:
     """Takes the key and returns the book object in a string
     Args:
         key (str): isbn or title
@@ -26,10 +27,10 @@ def get(key: str) -> list[str]:
         list[str]: book object in a string
     """
     decoded = r.get(key).decode('UTF-8')
-    return decoded.split(", ")
+    return create_from_str(decoded)
 
 
-def get_all() -> list[list[str]]:
+def get_all() -> list[dict]:
     """Gets all keys and values stored in cache
     Returns:
         list[list[str]]: 2D list of all books stored in cache as strings in the format [[isbn, title, url_goodreads,
@@ -41,6 +42,8 @@ def get_all() -> list[list[str]]:
     # get values
     values = []
     for key in keys:
-        values.append(get(key))
-
+        values.append(get(key).make_dict())
     return values
+
+
+get_all()

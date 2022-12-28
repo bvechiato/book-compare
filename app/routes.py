@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect
 from app import app, cache_manager
 from checks import validate
-from app import models
+from app import models, db
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -29,15 +29,16 @@ def index():
 
 @app.route('/<search_term>', methods=['POST', 'GET'])
 def search_with_name(search_term):
-    recently_searched = cache_manager.get_all()
-
     # check if book already exists in cache
     if cache_manager.check(search_term):
         display_book = cache_manager.get(search_term)
-        return render_template('main.html', book=display_book, recently_searched=recently_searched)
-    
-    display_book = models.config_book(search_term)
+    elif db.get_book(search_term) is not None:
+        display_book = models.create_from_dict(db.get_book(search_term))
+    else:
+        display_book = models.config_book(search_term)
 
     # get cache to render
     recently_searched = cache_manager.get_all()
+
+    display_book = display_book.make_dict()
     return render_template('main.html', book=display_book, recently_searched=recently_searched)
