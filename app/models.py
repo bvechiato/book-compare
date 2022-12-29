@@ -38,9 +38,12 @@ def config_book(isbn) -> Book:
     waterstones_price, waterstones_url = price.waterstones(isbn)
     wob_price, wob_url = price.wob(isbn)
     blackwells_price, blackwells_url = price.blackwells(isbn)
+    is_blacklisted = db.is_in_blacklist(isbn)
 
-    if waterstones_price == "unavailable" and wob_price == "unavailable" and blackwells_price == "unavailable":
+    if waterstones_price == "unavailable" and wob_price == "unavailable" and blackwells_price == "unavailable" \
+            and not is_blacklisted:
         db.add_blacklist(isbn)
+        is_blacklisted = True
 
     # create new book
     new_book = Book(isbn.strip(), book_title.strip(), author.strip(),
@@ -48,8 +51,9 @@ def config_book(isbn) -> Book:
                     waterstones_url.strip(), blackwells_url.strip())
 
     # set cache
-    cache_manager.set(isbn, new_book)
-    db.add_book(isbn, new_book.make_dict())
+    if not is_blacklisted:
+        cache_manager.set(isbn, new_book)
+        db.add_book(isbn, new_book.make_dict())
 
     return new_book
 

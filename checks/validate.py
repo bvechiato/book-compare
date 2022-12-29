@@ -33,11 +33,11 @@ def isbn(isbn: str) -> tuple[bool, str]:
     Returns:
         has_error, error_message
     """
-    if len(isbn) != 13:
-        return True, "ISBN must be 13 characters, no spaces or hyphens."
+    if len(isbn) != 13 and len(isbn) != 10:
+        return True, "ISBN must be 10 or 13 characters, no spaces or hyphens."
 
     query = 'isbn:' + isbn
-    params = {"q": query}
+    params = {"q": query, "orderBy": "relevance", "printType": "books", "projection": "lite"}
     url = r'https://www.googleapis.com/books/v1/volumes'
 
     response = requests.get(url, params=params)
@@ -61,24 +61,31 @@ def title(book_title: str, author: str = None) -> tuple[bool, str, str]:
         has_error, error_message
     """
     if author:
-        query = f'intitle:{book_title}+inauthor:{author}'
+        query = f'{book_title}+inauthor:{author}'
     else:
-        query = f'intitle:{book_title}'
-    params = {"q": query}
+        query = f'{book_title}'
+    params = {"q": query, "orderBy": "relevance", "printType": "books", "maxResults": "40"}
     url = r'https://www.googleapis.com/books/v1/volumes'
 
     response = requests.get(url, params=params)
     response_dict = response.json()
     found_isbn = "1234567891011"
+    validated_isbn = isbn(found_isbn)
 
     current = -1
     blacklist = db.get_blacklist()
-    while found_isbn in blacklist:
-        current += 1
+    print(response_dict)
+    for current in range(len(response_dict["items"])):
         try:
             isbn_type = response_dict['items'][current]['volumeInfo']['industryIdentifiers'][0]['type']
             if isbn_type == "ISBN_13":
                 found_isbn = response_dict['items'][current]['volumeInfo']['industryIdentifiers'][0]['identifier']
+                validated_isbn = isbn(found_isbn)
+                if not validated_isbn[0] and found_isbn not in blacklist:
+                    break
         except KeyError:
             return True, "Couldn't find a book with that title and author, please check spelling and try again.", ""
+        print(current)
+    if validated_isbn[0]:
+        return True, "Couldn't find a book with that title and author, please check spelling and try again.", ""
     return False, "", found_isbn

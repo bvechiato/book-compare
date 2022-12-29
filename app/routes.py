@@ -27,15 +27,15 @@ def index():
         return render_template('base.html', recently_searched=recently_searched)
 
 
-@app.route('/<search_term>', methods=['POST', 'GET'])
-def search_with_name(search_term):
+@app.route('/<book_isbn>', methods=['POST', 'GET'])
+def search_with_name(book_isbn):
     # check if book already exists in cache
-    if cache_manager.check(search_term):
-        display_book = cache_manager.get(search_term)
-    elif db.get_book(search_term) is not None:
-        display_book = models.create_from_dict(db.get_book(search_term))
+    if cache_manager.check(book_isbn):
+        display_book = cache_manager.get(book_isbn)
+    elif db.get_book(book_isbn):
+        display_book = models.create_from_dict(db.get_book(book_isbn))
     else:
-        display_book = models.config_book(search_term)
+        display_book = models.config_book(book_isbn)
 
     # get cache to render
     recently_searched = cache_manager.get_all()

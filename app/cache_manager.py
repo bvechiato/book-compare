@@ -44,6 +44,3 @@ def get_all() -> list[dict]:
     for key in keys:
         values.append(get(key).make_dict())
     return values
-
-
-get_all()

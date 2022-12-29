@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10bd5ff5-fd11-4439-8787-fa88911672c9" name="Changes" comment="Realtime Book database">
+    <list default="true" id="10bd5ff5-fd11-4439-8787-fa88911672c9" name="Changes" comment="GoogleBooks API isn't very clever...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cache_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cache_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checks/find.py" beforeDir="false" afterPath="$PROJECT_DIR$/checks/find.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checks/validate.py" beforeDir="false" afterPath="$PROJECT_DIR$/checks/validate.py" afterDir="false" />
     </list>
@@ -43,7 +46,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.find">
+  <component name="RunManager" selected="Python.validate">
     <configuration name="cache_manager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="book-compare" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -151,9 +154,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.validate" />
         <item itemvalue="Python.find" />
         <item itemvalue="Python.db" />
-        <item itemvalue="Python.validate" />
         <item itemvalue="Python.cache_manager" />
         <item itemvalue="Python.routes" />
       </list>
@@ -259,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672242647660</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="GoogleBooks API isn't very clever...">
+      <created>1672255959227</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1672255959227</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -300,6 +310,7 @@
     <MESSAGE value="Validates ISBN" />
     <MESSAGE value="Uses GoogleBooksAPI now" />
     <MESSAGE value="Realtime Book database" />
-    <option name="LAST_COMMIT_MESSAGE" value="Realtime Book database" />
+    <MESSAGE value="GoogleBooks API isn't very clever..." />
+    <option name="LAST_COMMIT_MESSAGE" value="GoogleBooks API isn't very clever..." />
   </component>
 </project>

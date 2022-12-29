@@ -11,17 +11,17 @@
     <tr>
         <!-- wob -->
         <td><a href="{{ book['Wob']['URL'] }}" class="hover:font-medium dark:text-gray-300">Wob</a></td>
-        <td>{{ book['Wob']['Price'] }}</td>
+        <td class="text-right">{{ book['Wob']['Price'] }}</td>
     </tr>
     <tr>
         <!-- waterstones -->
         <td><a href="{{ book['Waterstones']['URL'] }}" class="hover:font-medium dark:text-gray-300">Waterstones</a></td>
-        <td>{{ book['Waterstones']['Price'] }}</td>
+        <td class="text-right">{{ book['Waterstones']['Price'] }}</td>
     </tr>
     <tr>
         <!-- blackwells -->
         <td><a href="{{ book['Blackwells']['URL'] }}" class="hover:font-medium dark:text-gray-300">Blackwells</a></td>
-        <td>{{ book['Blackwells']['Price'] }}</td>
+        <td class="text-right">{{ book['Blackwells']['Price'] }}</td>
     </tr>
 </table>
 {% endblock %}
