@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect
 from app import app, cache_manager
-from checks import validate
+from app.checks import validate
 from app import models, db
 
 

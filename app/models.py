@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from checks import price, find
+from app.checks import find, price
 from app import cache_manager, db
 
 

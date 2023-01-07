@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10bd5ff5-fd11-4439-8787-fa88911672c9" name="Changes" comment="GoogleBooks API isn't very clever...">
+    <list default="true" id="10bd5ff5-fd11-4439-8787-fa88911672c9" name="Changes" comment="Still tweakin">
+      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cache_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cache_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checks/find.py" beforeDir="false" afterPath="$PROJECT_DIR$/checks/find.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checks/validate.py" beforeDir="false" afterPath="$PROJECT_DIR$/checks/validate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checks/find.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/checks/find.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checks/price.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/checks/price.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checks/validate.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/checks/validate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checks/with_selenium.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/checks/with_selenium.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chromedriver" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +48,11 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.validate">
     <configuration name="cache_manager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="book-compare" />
@@ -269,7 +276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672255959227</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Still tweakin">
+      <created>1672342990151</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1672342990151</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -311,6 +325,7 @@
     <MESSAGE value="Uses GoogleBooksAPI now" />
     <MESSAGE value="Realtime Book database" />
     <MESSAGE value="GoogleBooks API isn't very clever..." />
-    <option name="LAST_COMMIT_MESSAGE" value="GoogleBooks API isn't very clever..." />
+    <MESSAGE value="Still tweakin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Still tweakin" />
   </component>
 </project>
