@@ -1,6 +1,6 @@
 # import enchant
 import requests
-from app import db
+from fb import db
 
 
 # this doesn't work rn, enchant doesn't work on silicon

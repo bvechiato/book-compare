@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from app.checks import find, price
-from app import cache_manager, db
+from app import cache_manager
+from fb import db
 
 
 @dataclass

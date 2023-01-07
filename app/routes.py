@@ -1,7 +1,8 @@
 from flask import render_template, request, redirect
 from app import app, cache_manager
 from app.checks import validate
-from app import models, db
+from app import models
+from fb import db
 
 
 @app.route('/', methods=['POST', 'GET'])
