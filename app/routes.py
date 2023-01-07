@@ -2,7 +2,7 @@ from flask import render_template, request, redirect
 from app import app, cache_manager
 from app.checks import validate
 from app import models
-from fb import db
+from fb import db, user
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -47,7 +47,16 @@ def search(book_isbn):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    return render_template('login.html')
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['password']
+        successful, token = user.sign_in(email, password)
+
+        if not successful:
+            return render_template('login.html', error="Email and/or password incorrect")
+        return render_template('login.html', error="Successfully logged in")
+    else:
+        return render_template('login.html')
 
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -60,3 +69,8 @@ def view_saved():
     # if already signed in, not sure how to check that for now
     return redirect('/login')
 
+
+@app.route('/success', methods=['POST', 'GET'])
+def success():
+    # if already signed in, not sure how to check that for now
+    return "Nice"
