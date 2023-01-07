@@ -29,7 +29,7 @@ def index():
 
 
 @app.route('/<book_isbn>', methods=['POST', 'GET'])
-def search_with_name(book_isbn):
+def search(book_isbn):
     # check if book already exists in cache
     if cache_manager.check(book_isbn):
         display_book = cache_manager.get(book_isbn)
@@ -43,3 +43,20 @@ def search_with_name(book_isbn):
 
     display_book = display_book.make_dict()
     return render_template('main.html', book=display_book, recently_searched=recently_searched)
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    return render_template('login.html')
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    return render_template('register.html')
+
+
+@app.route('/saved', methods=['POST', 'GET'])
+def view_saved():
+    # if already signed in, not sure how to check that for now
+    return redirect('/login')
+
