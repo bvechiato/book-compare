@@ -21,7 +21,7 @@ def index():
             has_error, error_message, bookISBN = validate.title(book_title, book_author)
 
         if has_error:
-            return render_template('base.html', error=error_message, recently_searched=recently_searched)
+            return render_template('base.html', negative=True, error=error_message, recently_searched=recently_searched)
 
         return redirect(f'/{bookISBN}')
     else: 
@@ -53,24 +53,27 @@ def login():
         successful, token = user.sign_in(email, password)
 
         if not successful:
-            return render_template('login.html', error="Email and/or password incorrect")
-        return render_template('login.html', error="Successfully logged in")
+            return render_template('login.html', negative=True, error="Email and/or password incorrect")
+        return render_template('login.html', negative=False, error="Successfully logged in")
     else:
         return render_template('login.html')
 
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    return render_template('register.html')
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['password']
+        successful = user.register(email, password)
+
+        if not successful:
+            return render_template('register.html', negative=True, error="Try again later")
+        return render_template('register.html', negative=False, error="Successfully registered")
+    else:
+        return render_template('register.html')
 
 
 @app.route('/saved', methods=['POST', 'GET'])
 def view_saved():
     # if already signed in, not sure how to check that for now
     return redirect('/login')
-
-
-@app.route('/success', methods=['POST', 'GET'])
-def success():
-    # if already signed in, not sure how to check that for now
-    return "Nice"
