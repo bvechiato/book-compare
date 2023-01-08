@@ -1,7 +1,6 @@
-from flask import render_template, request, redirect
-from app import app, cache_manager
+from flask import render_template, request, redirect, session
+from app import app, cache_manager, models
 from app.checks import validate
-from app import models
 from fb import db, user
 
 
@@ -21,7 +20,7 @@ def index():
             has_error, error_message, bookISBN = validate.title(book_title, book_author)
 
         if has_error:
-            return render_template('base.html', negative=True, error=error_message, recently_searched=recently_searched)
+            return render_template('base.html', negative=True, message=error_message, recently_searched=recently_searched)
 
         return redirect(f'/{bookISBN}')
     else: 
@@ -53,8 +52,9 @@ def login():
         successful, token = user.sign_in(email, password)
 
         if not successful:
-            return render_template('login.html', negative=True, error="Email and/or password incorrect")
-        return render_template('login.html', negative=False, error="Successfully logged in")
+            return render_template('login.html', negative=True, message="Email and/or password incorrect")
+        session['id'] = token
+        return render_template('login.html', negative=False, message="Successfully logged in")
     else:
         return render_template('login.html')
 
@@ -67,13 +67,20 @@ def register():
         successful = user.register(email, password)
 
         if not successful:
-            return render_template('register.html', negative=True, error="Try again later")
-        return render_template('register.html', negative=False, error="Successfully registered")
+            return render_template('register.html', negative=True, message="Try again later")
+        return render_template('register.html', negative=False, message="Successfully registered")
     else:
         return render_template('register.html')
 
 
+@app.route('/logout', methods=['POST', 'GET'])
+def logout():
+    session.pop("id", None)
+    return render_template('login.html', negative=False, message="Successfully logged out")
+
+
 @app.route('/saved', methods=['POST', 'GET'])
 def view_saved():
-    # if already signed in, not sure how to check that for now
-    return redirect('/login')
+    if not session.get("id"):
+        return redirect('/login')
+    return render_template('saved.html')

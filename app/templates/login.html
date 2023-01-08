@@ -12,8 +12,8 @@
         <header class="block py-3 px-5">
             <h1 class="text-3xl font-medium text-gray-900 dark:text-white text-center mb-8 mt-8"><a href="/">book-compare</a></h1>
         </header>
-        {% if error %}
-            {% with error=error %}
+        {% if message %}
+            {% with message=message %}
                 {% include "error_message.html" %}
             {% endwith %}
         {% endif %}
@@ -30,8 +30,8 @@
                   </div>
                 </form>
                 <div class="px-5 pt-6 pb-4 text-center m-auto text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"> OR </div>
-                <form action="/register" method="POST">
-                    <input type="submit" name="submitButton" value="Register" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-700 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <form action="/register" method="GET">
+                    <input type="submit" name="submitButton" value="Register" class="w-full text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 </form>
             </div>
         </main>

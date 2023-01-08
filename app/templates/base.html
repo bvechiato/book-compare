@@ -13,8 +13,8 @@
             <a href="/saved" class="hover:text-blue-800 float-right font-small dark:text-white">Saved</a>
             <h1 class="text-3xl font-medium text-gray-900 dark:text-white text-center mb-8 mt-8"><a href="/">book-compare</a></h1>
         </header>
-        {% if error %}
-            {% with error=error %}
+        {% if message %}
+            {% with message=message %}
                 {% include "error_message.html" %}
             {% endwith %}
         {% endif %}
