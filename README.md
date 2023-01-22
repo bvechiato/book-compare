@@ -2,6 +2,10 @@
 compare book prices on amazon, wob and waterstones so i dont have to do it :)
 
 
+## stack
+python, flask, firebase & tailwind
+
+
 # set up
 1. virtualenv
 
