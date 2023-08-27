@@ -74,7 +74,6 @@ def title(book_title: str, author: str = None) -> tuple[bool, str, str]:
 
     current = -1
     blacklist = db.get_blacklist()
-    print(response_dict)
     for current in range(len(response_dict["items"])):
         try:
             isbn_type = response_dict['items'][current]['volumeInfo']['industryIdentifiers'][0]['type']
@@ -85,7 +84,6 @@ def title(book_title: str, author: str = None) -> tuple[bool, str, str]:
                     break
         except KeyError:
             return True, "Couldn't find a book with that title and author, please check spelling and try again.", ""
-        print(current)
     if validated_isbn[0]:
         return True, "Couldn't find a book with that title and author, please check spelling and try again.", ""
     return False, "", found_isbn
